@@ -4,14 +4,21 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+// JitPack Maven
+apply plugin: 'com.github.dcendents.android-maven'
+// Your Group
+group='com.github.781414750@qq.com'
+
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.cangmaomao.network.request"
-        minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0.0"
+        if(!rootProject.ext.isLib){
+            applicationId "com.cangmaomao.network.request"
+        }
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,19 +31,29 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    //网络请求
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api(rootProject.ext.dependencies.appcompatV7)   {
+        exclude module: "support-annotations"
+        exclude module: "support-v4"
+    }
+
+    api rootProject.ext.dependencies.constraintLayout
+    api rootProject.ext.dependencies.retrofit
+    api rootProject.ext.dependencies.gson
+    api rootProject.ext.dependencies.retrofit2Rxjava2Adapter
+    api rootProject.ext.dependencies.okhttp
+    api rootProject.ext.dependencies.loggingInterceptor
+    api rootProject.ext.dependencies.rxjava
+    api rootProject.ext.dependencies.rxandroid
+    api rootProject.ext.dependencies.multiImageSelector
+    api rootProject.ext.dependencies.dagger
+    api rootProject.ext.dependencies.daggerAndroid
+    api rootProject.ext.dependencies.daggerAndroidSupport
+
+
 }
