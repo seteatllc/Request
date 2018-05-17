@@ -1,4 +1,4 @@
-package com.cangmaomao.network.request;
+package com.cangmaomao.network.request.bean;
 
 /**
  * Created by 17246 on 2017/11/5.

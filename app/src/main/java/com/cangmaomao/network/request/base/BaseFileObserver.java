@@ -5,13 +5,13 @@ import com.cangmaomao.network.request.RxHttpMange;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class BaseObserver<T> implements Observer<T> {
+public class BaseFileObserver<T> implements Observer<T> {
 
     private String tag;
 
-    private BaseResponseListener<T> listener;
+    private BaseFileResponseListener<T> listener;
 
-    public BaseObserver(String tag, BaseResponseListener listener) {
+    public BaseFileObserver(String tag, BaseFileResponseListener listener) {
         this.listener = listener;
         this.tag = tag;
     }
@@ -36,4 +36,10 @@ public class BaseObserver<T> implements Observer<T> {
     public void onComplete() {
 
     }
+
+    public void onProgressChange(long bytesWritten, long contentLength) {
+        listener.onProgress(bytesWritten, contentLength);
+    }
 }
+
+
